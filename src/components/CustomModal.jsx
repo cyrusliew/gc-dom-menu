@@ -61,8 +61,8 @@ const CustomModal = ({ drink, initialItem, onClose, onAdd }) => {
     onClose();
   };
 
-  const sugarOptions = ["0%", "30%", "50%", "70%", "100%", "130%"];
-  const iceOptions = ["No Ice", "Little Ice", "Less Ice", "Standard", "Extra Ice"];
+  const sugarOptions = ["0% No Sugar", "30% Little Sugar", "50% Half Sugar", "70% Less Sugar", "100% Standard Sugar", "130% Extra Sugar"];
+  const iceOptions = ["0% No Ice", "30% Little Ice", "70% Less Ice", "100% Standard", "130% Extra Ice"];
 
   return (
     <div style={{
@@ -91,15 +91,17 @@ const CustomModal = ({ drink, initialItem, onClose, onAdd }) => {
         </div>
 
         {/* Size */}
-        <Section title="Size">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-            {["Regular", ...(drink.largePrice ? ["Large"] : [])].map(s => (
-              <Pill key={s} selected={size === s} onClick={() => setSize(s)}
-                label={s === "Regular" ? `Regular — $${drink.regularPrice.toFixed(2)}` : `Large — $${drink.largePrice?.toFixed(2)}`}
-              />
-            ))}
-          </div>
-        </Section>
+        {drink.series !== "Waffle Series" && (
+          <Section title="Size">
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+              {["Regular", ...(drink.largePrice ? ["Large"] : [])].map(s => (
+                <Pill key={s} selected={size === s} onClick={() => setSize(s)}
+                  label={s === "Regular" ? `Regular — $${drink.regularPrice.toFixed(2)}` : `Large — $${drink.largePrice?.toFixed(2)}`}
+                />
+              ))}
+            </div>
+          </Section>
+        )}
 
         {/* Temperature */}
         {(drink.hasIce || drink.hasHot) && (
@@ -134,38 +136,40 @@ const CustomModal = ({ drink, initialItem, onClose, onAdd }) => {
         )}
 
         {/* Toppings */}
-        <Section title="Add Toppings (+$1.00–$1.30 each)">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
-            {TOPPINGS.map(t => {
-              const isSelected = !!selectedToppings.find(s => s.name === t.name);
-              const isDisabled = !isSelected && selectedToppings.length >= 3;
-              return (
-              <button
-                key={t.name}
-                onClick={() => toggleTopping(t)}
-                disabled={isDisabled}
-                style={{
-                  border: isSelected ? "2px solid #B91C1C" : "1.5px solid #e5e7eb",
-                  borderRadius: 10, padding: "9px 10px", 
-                  cursor: isDisabled ? "not-allowed" : "pointer", 
-                  textAlign: "left",
-                  background: isSelected ? "#fef3f3" : (isDisabled ? "#f9fafb" : "white"),
-                  opacity: isDisabled ? 0.5 : 1,
-                  transition: "all 0.15s",
-                  display: "flex", justifyContent: "space-between", alignItems: "center",
-                }}
-              >
-                <span style={{ fontSize: 12, fontWeight: 600, color: isDisabled ? "#9ca3af" : "#333" }}>{t.name}</span>
-                <span style={{ fontSize: 11, color: isDisabled ? "#9ca3af" : "#B91C1C", fontWeight: 700 }}>+${t.price.toFixed(2)}</span>
-              </button>
-            )})}
-          </div>
-        </Section>
+        {drink.series !== "Waffle Series" && (
+          <Section title="Add Toppings (+$1.00–$1.30 each)">
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
+              {TOPPINGS.map(t => {
+                const isSelected = !!selectedToppings.find(s => s.name === t.name);
+                const isDisabled = !isSelected && selectedToppings.length >= 3;
+                return (
+                <button
+                  key={t.name}
+                  onClick={() => toggleTopping(t)}
+                  disabled={isDisabled}
+                  style={{
+                    border: isSelected ? "2px solid #B91C1C" : "1.5px solid #e5e7eb",
+                    borderRadius: 10, padding: "9px 10px", 
+                    cursor: isDisabled ? "not-allowed" : "pointer", 
+                    textAlign: "left",
+                    background: isSelected ? "#fef3f3" : (isDisabled ? "#f9fafb" : "white"),
+                    opacity: isDisabled ? 0.5 : 1,
+                    transition: "all 0.15s",
+                    display: "flex", justifyContent: "space-between", alignItems: "center",
+                  }}
+                >
+                  <span style={{ fontSize: 12, fontWeight: 600, color: isDisabled ? "#9ca3af" : "#333" }}>{t.name}</span>
+                  <span style={{ fontSize: 11, color: isDisabled ? "#9ca3af" : "#B91C1C", fontWeight: 700 }}>+${t.price.toFixed(2)}</span>
+                </button>
+              )})}
+            </div>
+          </Section>
+        )}
 
         {/* Price Summary */}
         <div style={{ background: "#fef9f9", borderRadius: 14, padding: "12px 16px", marginBottom: 16, border: "1px solid #fde8e8" }}>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#666", marginBottom: 4 }}>
-            <span>Base ({size})</span>
+            <span>Base {drink.series !== "Waffle Series" && `(${size})`}</span>
             <span>${basePrice.toFixed(2)}</span>
           </div>
           {selectedToppings.map(t => (

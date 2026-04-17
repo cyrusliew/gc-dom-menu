@@ -131,6 +131,11 @@ export const RAW_MENU = [
   { series: "Greek yogurt Series", name: "Mango Greek Yogurt", regularPrice: 10.90, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
   { series: "Greek yogurt Series", name: "Strawberry Greek Yogurt", regularPrice: 10.90, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
   { series: "Greek yogurt Series", name: "Peach Greek Yogurt", regularPrice: 10.90, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
+  // Waffle Series
+  { series: "Waffle Series", name: "Classic Waffle", regularPrice: 11.50, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
+  { series: "Waffle Series", name: "Strawberry Oreo Waffle", regularPrice: 15.00, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
+  { series: "Waffle Series", name: "QQ Passionfruit Waffle", regularPrice: 15.00, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
+  { series: "Waffle Series", name: "Milk Form Caramel Waffle", regularPrice: 15.00, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
 ];
 
 // ─── BUILD CATEGORIES ────────────────────────────────────────────────────────
@@ -230,4 +235,5 @@ export const SERIES_EMOJI = {
   "Redbull Series": "⚡",
   "Best Sellers": "⭐",
   "Seasonal": "🌸",
+  "Waffle Series": "🧇",
 };
