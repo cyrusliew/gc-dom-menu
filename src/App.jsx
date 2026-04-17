@@ -186,7 +186,7 @@ export default function App() {
             }}
           >
             <ShoppingCart size={16} />
-            {cartItems.length} drink{cartItems.length !== 1 ? "s" : ""}<br/>
+            {cartItems.length} item{cartItems.length !== 1 ? "s" : ""}<br/>
             {FEATURE_HIDE_TOTAL_PRICE ? (savings > 0 ? `Save $${savings.toFixed(2)}` : "") : ` · $${total.toFixed(2)}`}
           </button>
           <button
