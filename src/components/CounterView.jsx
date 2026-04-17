@@ -28,7 +28,7 @@ const CounterView = ({ cartItems, itemTotals, total, savings, discountedCount, o
           </div>
         )}
         <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: 10, padding: "6px 14px", color: "white" }}>
-          <span style={{ fontSize: 11, opacity: 0.8 }}>Drinks </span>
+          <span style={{ fontSize: 11, opacity: 0.8 }}>Items </span>
           <span style={{ fontWeight: 900, fontSize: 16 }}>{cartItems.length}</span>
         </div>
         {savings > 0 && (
