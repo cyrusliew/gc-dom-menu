@@ -25,19 +25,23 @@ const Pill = ({ selected, onClick, label, small }) => (
   </button>
 );
 
-const CustomModal = ({ drink, onClose, onAdd }) => {
-  const [size, setSize] = useState("Regular");
-  const [sugar, setSugar] = useState(drink.hasSugar ? "100%" : null);
-  const [ice, setIce] = useState(drink.hasIce ? "Standard" : null);
-  const [temp, setTemp] = useState(drink.hasIce ? "Iced" : drink.hasHot ? "Hot" : "Iced");
-  const [selectedToppings, setSelectedToppings] = useState([]);
+const CustomModal = ({ drink, initialItem, onClose, onAdd }) => {
+  const [size, setSize] = useState(initialItem?.size || "Regular");
+  const [sugar, setSugar] = useState(initialItem ? initialItem.sugar : (drink.hasSugar ? "100%" : null));
+  const [ice, setIce] = useState(initialItem ? initialItem.ice : (drink.hasIce ? "Standard" : null));
+  const [temp, setTemp] = useState(initialItem ? initialItem.temp : (drink.hasIce ? "Iced" : drink.hasHot ? "Hot" : "Iced"));
+  const [selectedToppings, setSelectedToppings] = useState(initialItem?.toppings || []);
 
   const toggleTopping = (topping) => {
-    setSelectedToppings(prev =>
-      prev.find(t => t.name === topping.name)
-        ? prev.filter(t => t.name !== topping.name)
-        : [...prev, topping]
-    );
+    setSelectedToppings(prev => {
+      const isSelected = prev.find(t => t.name === topping.name);
+      if (isSelected) {
+        return prev.filter(t => t.name !== topping.name);
+      } else {
+        if (prev.length >= 3) return prev;
+        return [...prev, topping];
+      }
+    });
   };
 
   const basePrice = size === "Large" ? (drink.largePrice || drink.regularPrice + 1) : drink.regularPrice;
@@ -52,7 +56,7 @@ const CustomModal = ({ drink, onClose, onAdd }) => {
       ice: temp === "Hot" ? null : ice,
       temp,
       toppings: selectedToppings,
-      id: Date.now() + Math.random(),
+      id: initialItem?.id || (Date.now() + Math.random()),
     });
     onClose();
   };
@@ -132,22 +136,29 @@ const CustomModal = ({ drink, onClose, onAdd }) => {
         {/* Toppings */}
         <Section title="Add Toppings (+$1.00–$1.30 each)">
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
-            {TOPPINGS.map(t => (
+            {TOPPINGS.map(t => {
+              const isSelected = !!selectedToppings.find(s => s.name === t.name);
+              const isDisabled = !isSelected && selectedToppings.length >= 3;
+              return (
               <button
                 key={t.name}
                 onClick={() => toggleTopping(t)}
+                disabled={isDisabled}
                 style={{
-                  border: selectedToppings.find(s => s.name === t.name) ? "2px solid #B91C1C" : "1.5px solid #e5e7eb",
-                  borderRadius: 10, padding: "9px 10px", cursor: "pointer", textAlign: "left",
-                  background: selectedToppings.find(s => s.name === t.name) ? "#fef3f3" : "white",
+                  border: isSelected ? "2px solid #B91C1C" : "1.5px solid #e5e7eb",
+                  borderRadius: 10, padding: "9px 10px", 
+                  cursor: isDisabled ? "not-allowed" : "pointer", 
+                  textAlign: "left",
+                  background: isSelected ? "#fef3f3" : (isDisabled ? "#f9fafb" : "white"),
+                  opacity: isDisabled ? 0.5 : 1,
                   transition: "all 0.15s",
                   display: "flex", justifyContent: "space-between", alignItems: "center",
                 }}
               >
-                <span style={{ fontSize: 12, fontWeight: 600, color: "#333" }}>{t.name}</span>
-                <span style={{ fontSize: 11, color: "#B91C1C", fontWeight: 700 }}>+${t.price.toFixed(2)}</span>
+                <span style={{ fontSize: 12, fontWeight: 600, color: isDisabled ? "#9ca3af" : "#333" }}>{t.name}</span>
+                <span style={{ fontSize: 11, color: isDisabled ? "#9ca3af" : "#B91C1C", fontWeight: 700 }}>+${t.price.toFixed(2)}</span>
               </button>
-            ))}
+            )})}
           </div>
         </Section>
 
@@ -182,7 +193,7 @@ const CustomModal = ({ drink, onClose, onAdd }) => {
             boxShadow: "0 4px 16px rgba(185,28,28,0.35)",
           }}
         >
-          Add to Order
+          {initialItem ? "Update Order" : "Add to Order"}
         </button>
       </div>
     </div>

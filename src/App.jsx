@@ -14,6 +14,7 @@ import CartSidebar from './components/CartSidebar';
 export default function App() {
   const [cartItems, setCartItems] = useState([]);
   const [selectedDrink, setSelectedDrink] = useState(null);
+  const [editingItem, setEditingItem] = useState(null);
   const [activeCategory, setActiveCategory] = useState("Best Sellers");
   const [showCart, setShowCart] = useState(false);
   const [showCounter, setShowCounter] = useState(false);
@@ -23,7 +24,13 @@ export default function App() {
   const { total, savings, discountedCount, itemTotals } = useMemo(() => calcCartTotals(cartItems), [cartItems]);
 
   const addToCart = useCallback((item) => {
-    setCartItems(prev => [...prev, item]);
+    setCartItems(prev => {
+      const existing = prev.find(i => i.id === item.id);
+      if (existing) {
+        return prev.map(i => i.id === item.id ? item : i);
+      }
+      return [...prev, item];
+    });
   }, []);
 
   const removeFromCart = useCallback((id) => {
@@ -191,10 +198,11 @@ export default function App() {
       />
 
       {/* ── MODALS ── */}
-      {selectedDrink && (
+      {(selectedDrink || editingItem) && (
         <CustomModal
-          drink={selectedDrink}
-          onClose={() => setSelectedDrink(null)}
+          drink={selectedDrink || editingItem.drink}
+          initialItem={editingItem}
+          onClose={() => { setSelectedDrink(null); setEditingItem(null); }}
           onAdd={addToCart}
         />
       )}
@@ -207,6 +215,7 @@ export default function App() {
           savings={savings}
           discountedCount={discountedCount}
           onRemove={removeFromCart}
+          onEdit={(item) => { setEditingItem(item); setShowCart(false); }}
           onShowCounter={() => { setShowCart(false); setShowCounter(true); }}
           onClose={() => setShowCart(false)}
         />

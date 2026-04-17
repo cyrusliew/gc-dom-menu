@@ -1,7 +1,7 @@
 import React from "react";
-import { X, Trash2, Eye } from "lucide-react";
+import { X, Trash2, Eye, Pencil } from "lucide-react";
 
-const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, onRemove, onShowCounter, onClose }) => (
+const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, onRemove, onEdit, onShowCounter, onClose }) => (
   <div style={{ position: "fixed", inset: 0, zIndex: 800 }} onClick={e => e.target === e.currentTarget && onClose()}>
     <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.4)" }} onClick={onClose} />
     <div style={{
@@ -60,12 +60,20 @@ const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, o
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6, marginLeft: 8 }}>
                     <span style={{ fontSize: 15, fontWeight: 800, color: "#B91C1C" }}>${info.itemTotal.toFixed(2)}</span>
-                    <button
-                      onClick={() => onRemove(item.id)}
-                      style={{ background: "#fee2e2", border: "none", borderRadius: "50%", width: 26, height: 26, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
-                    >
-                      <Trash2 size={12} color="#B91C1C" />
-                    </button>
+                    <div style={{ display: "flex", gap: 6 }}>
+                      <button
+                        onClick={() => onEdit(item)}
+                        style={{ background: "#f3f4f6", border: "none", borderRadius: "50%", width: 26, height: 26, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
+                      >
+                        <Pencil size={12} color="#4b5563" />
+                      </button>
+                      <button
+                        onClick={() => onRemove(item.id)}
+                        style={{ background: "#fee2e2", border: "none", borderRadius: "50%", width: 26, height: 26, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
+                      >
+                        <Trash2 size={12} color="#B91C1C" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
