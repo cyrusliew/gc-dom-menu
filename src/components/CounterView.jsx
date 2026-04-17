@@ -79,9 +79,9 @@ const CounterView = ({ cartItems, itemTotals, total, savings, discountedCount, o
 
             {/* Details */}
             <div style={{ borderTop: "1px solid #f0f0f0", paddingTop: 10, display: "flex", flexDirection: "column", gap: 5 }}>
+              {item.temp === "Hot" && <DetailRow icon="🔥" label="Temp" value="Hot" />}
               {item.sugar && <DetailRow icon="🍬" label="Sugar" value={item.sugar} />}
               {item.ice && <DetailRow icon="🧊" label="Ice" value={item.ice} />}
-              {item.temp === "Hot" && <DetailRow icon="🔥" label="Temp" value="Hot" />}
               {item.size === "Large" && <DetailRow icon="⬆️" label="Upsize" value="+$1.00" />}
               {totInfo.isDiscounted && <DetailRow icon="🎉" label="Discount" value={`Base $1.00 (-$${(item.drink.regularPrice - 1).toFixed(2)})`} red />}
               {item.toppings.map(t => (

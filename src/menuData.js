@@ -1,5 +1,6 @@
 // ─── FEATURE FLAGS ─────────────────────────────────────────────────────────────
 export const FEATURE_HIDE_TOTAL_PRICE = true;
+export const FEATURE_HIDE_SUGAR_ICE_LABEL = true; // When true, only show percentage (e.g. "100%") instead of full label (e.g. "100% Standard Sugar")
 
 // ─── RAW DATA ────────────────────────────────────────────────────────────────
 export const TOPPINGS = [

@@ -7,11 +7,22 @@ const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, o
 
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 800 }} onClick={e => e.target === e.currentTarget && onClose()}>
-    <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.4)" }} onClick={onClose} />
+    <style>{`
+      @keyframes slideInRight {
+        from { transform: translateX(100%); opacity: 0.6; }
+        to   { transform: translateX(0);    opacity: 1; }
+      }
+      @keyframes fadeInOverlay {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
+    `}</style>
+    <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.4)", animation: "fadeInOverlay 0.25s ease" }} onClick={onClose} />
     <div style={{
       position: "absolute", right: 0, top: 0, bottom: 0, width: "min(100%, 380px)",
       background: "white", overflowY: "auto", padding: "20px",
       boxShadow: "-10px 0 40px rgba(0,0,0,0.15)",
+      animation: "slideInRight 0.3s cubic-bezier(0.32, 0.72, 0, 1)",
     }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
         <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800 }}>Your Order ({cartItems.length})</h2>
@@ -47,9 +58,9 @@ const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, o
                     <div style={{ fontSize: 14, fontWeight: 700, color: "#1a1a1a" }}>{item.drink.name}</div>
                     <div style={{ fontSize: 12, color: "#888", marginTop: 2 }}>
                       {item.size}
+                      {item.temp === "Hot" ? " · Hot" : ""}
                       {item.sugar ? ` · ${item.sugar}` : ""}
                       {item.ice ? ` · ${item.ice}` : ""}
-                      {item.temp === "Hot" ? " · Hot" : ""}
                     </div>
                     {item.toppings.length > 0 && (
                       <div style={{ fontSize: 11, color: "#B91C1C", marginTop: 2 }}>
