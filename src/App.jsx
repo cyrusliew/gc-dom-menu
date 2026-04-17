@@ -9,6 +9,7 @@ import CustomModal from './components/CustomModal';
 import TopPickFloater from './components/TopPickFloater';
 import CounterView from './components/CounterView';
 import CartSidebar from './components/CartSidebar';
+import AgreementModal from './components/AgreementModal';
 
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
 export default function App() {
@@ -74,11 +75,6 @@ export default function App() {
         <div style={{ background: "#B91C1C", padding: "12px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <GongChaLogo />
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            {discountedCount > 0 && (
-              <div style={{ background: "#fbbf24", borderRadius: 20, padding: "4px 10px", fontSize: 11, fontWeight: 700, color: "#1a1a1a" }}>
-                🎉 {discountedCount} @ $1
-              </div>
-            )}
             <button
               onClick={() => setShowCart(true)}
               style={{
@@ -190,8 +186,8 @@ export default function App() {
             }}
           >
             <ShoppingCart size={16} />
-            {cartItems.length} drink{cartItems.length !== 1 ? "s" : ""}
-            {FEATURE_HIDE_TOTAL_PRICE ? (savings > 0 ? ` · Save $${savings.toFixed(2)}` : "") : ` · $${total.toFixed(2)}`}
+            {cartItems.length} drink{cartItems.length !== 1 ? "s" : ""}<br/>
+            {FEATURE_HIDE_TOTAL_PRICE ? (savings > 0 ? `Save $${savings.toFixed(2)}` : "") : ` · $${total.toFixed(2)}`}
           </button>
           <button
             onClick={() => setShowCounter(true)}
@@ -249,6 +245,8 @@ export default function App() {
           onClose={() => setShowCounter(false)}
         />
       )}
+
+      <AgreementModal />
     </div>
   );
 }
