@@ -1,5 +1,6 @@
 import React from "react";
 import { X } from "lucide-react";
+import { FEATURE_HIDE_TOTAL_PRICE } from "../menuData";
 
 const DetailRow = ({ icon, label, value, red }) => (
   <div style={{ display: "flex", gap: 8, fontSize: 13, color: red ? "#B91C1C" : "#555" }}>
@@ -20,10 +21,12 @@ const CounterView = ({ cartItems, itemTotals, total, savings, discountedCount, o
         </button>
       </div>
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-        <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: 10, padding: "6px 14px", color: "white" }}>
-          <span style={{ fontSize: 11, opacity: 0.8 }}>Total </span>
-          <span style={{ fontWeight: 900, fontSize: 16 }}>${total.toFixed(2)}</span>
-        </div>
+        {!FEATURE_HIDE_TOTAL_PRICE && (
+          <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: 10, padding: "6px 14px", color: "white" }}>
+            <span style={{ fontSize: 11, opacity: 0.8 }}>Total </span>
+            <span style={{ fontWeight: 900, fontSize: 16 }}>${total.toFixed(2)}</span>
+          </div>
+        )}
         <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: 10, padding: "6px 14px", color: "white" }}>
           <span style={{ fontSize: 11, opacity: 0.8 }}>Drinks </span>
           <span style={{ fontWeight: 900, fontSize: 16 }}>{cartItems.length}</span>
@@ -67,7 +70,9 @@ const CounterView = ({ cartItems, itemTotals, total, savings, discountedCount, o
                     ${(item.drink.regularPrice + totInfo.upsize + totInfo.toppingCost).toFixed(2)}
                   </div>
                 )}
-                <div style={{ fontSize: 18, fontWeight: 900, color: "#B91C1C" }}>${totInfo.itemTotal.toFixed(2)}</div>
+                {!FEATURE_HIDE_TOTAL_PRICE && (
+                  <div style={{ fontSize: 18, fontWeight: 900, color: "#B91C1C" }}>${totInfo.itemTotal.toFixed(2)}</div>
+                )}
                 {totInfo.isDiscounted && <div style={{ fontSize: 10, color: "#B91C1C", fontWeight: 700 }}>PROMO APPLIED</div>}
               </div>
             </div>
@@ -89,16 +94,23 @@ const CounterView = ({ cartItems, itemTotals, total, savings, discountedCount, o
 
       {/* Final total */}
       <div style={{ background: "#1a1a1a", borderRadius: 16, padding: "18px 20px", color: "white" }}>
-        {savings > 0 && (
+        {savings > 0 && !FEATURE_HIDE_TOTAL_PRICE && (
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#fbbf24", marginBottom: 6 }}>
             <span>🎉 Anniversary Savings</span>
             <span>-${savings.toFixed(2)}</span>
           </div>
         )}
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 22, fontWeight: 900 }}>
-          <span>TOTAL</span>
-          <span style={{ color: "#fbbf24" }}>${total.toFixed(2)}</span>
-        </div>
+        {!FEATURE_HIDE_TOTAL_PRICE ? (
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 22, fontWeight: 900 }}>
+            <span>TOTAL</span>
+            <span style={{ color: "#fbbf24" }}>${total.toFixed(2)}</span>
+          </div>
+        ) : (
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 22, fontWeight: 900 }}>
+            <span>TOTAL SAVINGS</span>
+            <span style={{ color: "#fbbf24" }}>${savings.toFixed(2)}</span>
+          </div>
+        )}
         <div style={{ fontSize: 11, color: "#888", marginTop: 4, textAlign: "center" }}>Show this screen to the barista</div>
         <div style={{ fontSize: 10, color: "#777", marginTop: 12, textAlign: "center", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: 10, lineHeight: 1.4 }}>
           * Please refer to the final price from the POS system for best final price accuracy.

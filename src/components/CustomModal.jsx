@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { X, Check } from "lucide-react";
-import { TOPPINGS, SERIES_EMOJI } from "../menuData";
+import { TOPPINGS, SERIES_EMOJI, FEATURE_HIDE_TOTAL_PRICE } from "../menuData";
 
 const Section = ({ title, children }) => (
   <div style={{ marginBottom: 20 }}>
@@ -167,25 +167,27 @@ const CustomModal = ({ drink, initialItem, onClose, onAdd }) => {
         )}
 
         {/* Price Summary */}
-        <div style={{ background: "#fef9f9", borderRadius: 14, padding: "12px 16px", marginBottom: 16, border: "1px solid #fde8e8" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#666", marginBottom: 4 }}>
-            <span>Base {drink.series !== "Waffle Series" && `(${size})`}</span>
-            <span>${basePrice.toFixed(2)}</span>
-          </div>
-          {selectedToppings.map(t => (
-            <div key={t.name} style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#666", marginBottom: 4 }}>
-              <span>+ {t.name}</span>
-              <span>+${t.price.toFixed(2)}</span>
+        {!FEATURE_HIDE_TOTAL_PRICE && (
+          <div style={{ background: "#fef9f9", borderRadius: 14, padding: "12px 16px", marginBottom: 16, border: "1px solid #fde8e8" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#666", marginBottom: 4 }}>
+              <span>Base {drink.series !== "Waffle Series" && `(${size})`}</span>
+              <span>${basePrice.toFixed(2)}</span>
             </div>
-          ))}
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 15, fontWeight: 800, color: "#B91C1C", borderTop: "1px solid #fde8e8", paddingTop: 8, marginTop: 4 }}>
-            <span>Estimated Total</span>
-            <span>${estimatedTotal.toFixed(2)}</span>
+            {selectedToppings.map(t => (
+              <div key={t.name} style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#666", marginBottom: 4 }}>
+                <span>+ {t.name}</span>
+                <span>+${t.price.toFixed(2)}</span>
+              </div>
+            ))}
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 15, fontWeight: 800, color: "#B91C1C", borderTop: "1px solid #fde8e8", paddingTop: 8, marginTop: 4 }}>
+              <span>Estimated Total</span>
+              <span>${estimatedTotal.toFixed(2)}</span>
+            </div>
+            <p style={{ fontSize: 10, color: "#999", margin: "6px 0 0", textAlign: "center" }}>
+              * Anniversary discount applied at checkout based on order total
+            </p>
           </div>
-          <p style={{ fontSize: 10, color: "#999", margin: "6px 0 0", textAlign: "center" }}>
-            * Anniversary discount applied at checkout based on order total
-          </p>
-        </div>
+        )}
 
         {/* Add Button */}
         <button

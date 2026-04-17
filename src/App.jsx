@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import { ShoppingCart,  Eye } from "lucide-react";
 
-import {  CATEGORIES, calcCartTotals, SERIES_EMOJI } from "./menuData";
+import {  CATEGORIES, calcCartTotals, SERIES_EMOJI, FEATURE_HIDE_TOTAL_PRICE } from "./menuData";
 
 import GongChaLogo from './components/GongChaLogo';
 import DrinkCard from './components/DrinkCard';
@@ -90,7 +90,11 @@ export default function App() {
             >
               <ShoppingCart size={16} />
               {cartItems.length > 0 ? (
-                <><span>{cartItems.length}</span><span>·</span><span>${total.toFixed(2)}</span></>
+                FEATURE_HIDE_TOTAL_PRICE ? (
+                  <><span>{cartItems.length}</span>{savings > 0 && <><span>·</span><span>Save ${savings.toFixed(2)}</span></>}</>
+                ) : (
+                  <><span>{cartItems.length}</span><span>·</span><span>${total.toFixed(2)}</span></>
+                )
               ) : "Cart"}
             </button>
           </div>
@@ -186,7 +190,8 @@ export default function App() {
             }}
           >
             <ShoppingCart size={16} />
-            {cartItems.length} drink{cartItems.length !== 1 ? "s" : ""} · ${total.toFixed(2)}
+            {cartItems.length} drink{cartItems.length !== 1 ? "s" : ""}
+            {FEATURE_HIDE_TOTAL_PRICE ? (savings > 0 ? ` · Save $${savings.toFixed(2)}` : "") : ` · $${total.toFixed(2)}`}
           </button>
           <button
             onClick={() => setShowCounter(true)}

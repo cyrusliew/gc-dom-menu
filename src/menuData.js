@@ -1,3 +1,6 @@
+// ─── FEATURE FLAGS ─────────────────────────────────────────────────────────────
+export const FEATURE_HIDE_TOTAL_PRICE = true;
+
 // ─── RAW DATA ────────────────────────────────────────────────────────────────
 export const TOPPINGS = [
   { name: "Aiyu Jelly", price: 1.00 },

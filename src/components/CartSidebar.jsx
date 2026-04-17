@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { X, Trash2, Eye, Pencil } from "lucide-react";
+import { FEATURE_HIDE_TOTAL_PRICE } from "../menuData";
 
 const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, onRemove, onEdit, onShowCounter, onStartOver, onClose }) => {
   const [showConfirm, setShowConfirm] = useState(false);
@@ -67,7 +68,9 @@ const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, o
                         ${(item.drink.regularPrice + info.upsize + info.toppingCost).toFixed(2)}
                       </span>
                     )}
-                    <span style={{ fontSize: 15, fontWeight: 800, color: "#B91C1C" }}>${info.itemTotal.toFixed(2)}</span>
+                    {!FEATURE_HIDE_TOTAL_PRICE && (
+                      <span style={{ fontSize: 15, fontWeight: 800, color: "#B91C1C" }}>${info.itemTotal.toFixed(2)}</span>
+                    )}
                     <div style={{ display: "flex", gap: 6 }}>
                       <button
                         onClick={() => onEdit(item)}
@@ -90,16 +93,23 @@ const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, o
 
           {/* Summary */}
           <div style={{ borderTop: "2px solid #f5f5f5", paddingTop: 16, marginTop: 8 }}>
-            {savings > 0 && (
+            {savings > 0 && !FEATURE_HIDE_TOTAL_PRICE && (
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#B91C1C", marginBottom: 6, fontWeight: 600 }}>
                 <span>Anniversary Savings</span>
                 <span>-${savings.toFixed(2)}</span>
               </div>
             )}
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 18, fontWeight: 900, color: "#1a1a1a", marginBottom: 16 }}>
-              <span>Total</span>
-              <span>${total.toFixed(2)}</span>
-            </div>
+            {!FEATURE_HIDE_TOTAL_PRICE ? (
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 18, fontWeight: 900, color: "#1a1a1a", marginBottom: 16 }}>
+                <span>Total</span>
+                <span>${total.toFixed(2)}</span>
+              </div>
+            ) : (
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 18, fontWeight: 900, color: "#1a1a1a", marginBottom: 16 }}>
+                <span>Total Savings</span>
+                <span style={{ color: "#B91C1C" }}>${savings.toFixed(2)}</span>
+              </div>
+            )}
             <button
               onClick={() => setShowConfirm(true)}
               style={{
