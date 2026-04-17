@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useRef } from "react";
+import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import { ShoppingCart,  Eye } from "lucide-react";
 
 import {  CATEGORIES, calcCartTotals, SERIES_EMOJI } from "./menuData";
@@ -12,7 +12,19 @@ import CartSidebar from './components/CartSidebar';
 
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
 export default function App() {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+    try {
+      const saved = localStorage.getItem("gc_cart");
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("gc_cart", JSON.stringify(cartItems));
+  }, [cartItems]);
+
   const [selectedDrink, setSelectedDrink] = useState(null);
   const [editingItem, setEditingItem] = useState(null);
   const [activeCategory, setActiveCategory] = useState("Best Sellers");
@@ -66,6 +78,17 @@ export default function App() {
               <div style={{ background: "#fbbf24", borderRadius: 20, padding: "4px 10px", fontSize: 11, fontWeight: 700, color: "#1a1a1a" }}>
                 🎉 {discountedCount} @ $1
               </div>
+            )}
+            {cartItems.length > 0 && (
+              <button
+                onClick={() => setCartItems([])}
+                style={{
+                  background: "rgba(255,255,255,0.15)", color: "white", border: "1px solid rgba(255,255,255,0.3)",
+                  borderRadius: 20, padding: "4px 10px", fontSize: 13, fontWeight: 600, cursor: "pointer",
+                }}
+              >
+                Start Over
+              </button>
             )}
             <button
               onClick={() => setShowCart(true)}

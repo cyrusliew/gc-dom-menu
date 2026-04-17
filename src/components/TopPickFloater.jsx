@@ -6,10 +6,14 @@ const TopPickFloater = ({ onSelect, onShowAll }) => {
   const [randomDrink, setRandomDrink] = useState(null);
   const [expanded, setExpanded] = useState(false);
 
-  useEffect(() => {
+  const randomizeDrink = () => {
     const bsCat = CATEGORIES.find(c => c.id === "Best Sellers");
     const picks = bsCat?.drinks || [];
     if (picks.length) setRandomDrink(picks[Math.floor(Math.random() * picks.length)]);
+  };
+
+  useEffect(() => {
+    randomizeDrink();
   }, []);
 
   if (!randomDrink) return null;
@@ -18,7 +22,7 @@ const TopPickFloater = ({ onSelect, onShowAll }) => {
     <>
       {/* Floater button */}
       <button
-        onClick={() => setExpanded(true)}
+        onClick={() => { randomizeDrink(); setExpanded(true); }}
         style={{
           position: "fixed", bottom: 90, right: 16, zIndex: 400,
           background: "#B91C1C", color: "white", border: "none",
