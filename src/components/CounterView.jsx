@@ -62,6 +62,11 @@ const CounterView = ({ cartItems, itemTotals, total, savings, discountedCount, o
                 <div style={{ fontSize: 12, color: "#888", marginTop: 1 }}>{item.size}</div>
               </div>
               <div style={{ textAlign: "right" }}>
+                {totInfo.isDiscounted && (
+                  <div style={{ fontSize: 13, color: "#999", textDecoration: "line-through", marginBottom: -2 }}>
+                    ${(item.drink.regularPrice + totInfo.upsize + totInfo.toppingCost).toFixed(2)}
+                  </div>
+                )}
                 <div style={{ fontSize: 18, fontWeight: 900, color: "#B91C1C" }}>${totInfo.itemTotal.toFixed(2)}</div>
                 {totInfo.isDiscounted && <div style={{ fontSize: 10, color: "#B91C1C", fontWeight: 700 }}>PROMO APPLIED</div>}
               </div>

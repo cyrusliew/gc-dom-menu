@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { X, Trash2, Eye, Pencil } from "lucide-react";
 
-const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, onRemove, onEdit, onShowCounter, onClose }) => (
-  <div style={{ position: "fixed", inset: 0, zIndex: 800 }} onClick={e => e.target === e.currentTarget && onClose()}>
+const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, onRemove, onEdit, onShowCounter, onStartOver, onClose }) => {
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 800 }} onClick={e => e.target === e.currentTarget && onClose()}>
     <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.4)" }} onClick={onClose} />
     <div style={{
       position: "absolute", right: 0, top: 0, bottom: 0, width: "min(100%, 380px)",
@@ -59,6 +62,11 @@ const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, o
                     )}
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6, marginLeft: 8 }}>
+                    {info.isDiscounted && (
+                      <span style={{ fontSize: 12, color: "#999", textDecoration: "line-through", marginBottom: -6 }}>
+                        ${(item.drink.regularPrice + info.upsize + info.toppingCost).toFixed(2)}
+                      </span>
+                    )}
                     <span style={{ fontSize: 15, fontWeight: 800, color: "#B91C1C" }}>${info.itemTotal.toFixed(2)}</span>
                     <div style={{ display: "flex", gap: 6 }}>
                       <button
@@ -93,6 +101,18 @@ const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, o
               <span>${total.toFixed(2)}</span>
             </div>
             <button
+              onClick={() => setShowConfirm(true)}
+              style={{
+                width: "100%", background: "#f5f5f5", color: "#666", border: "none",
+                borderRadius: 14, padding: "14px", fontSize: 15, fontWeight: 700,
+                cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                marginBottom: 10,
+              }}
+            >
+              <Trash2 size={18} />
+              Start Over
+            </button>
+            <button
               onClick={onShowCounter}
               style={{
                 width: "100%", background: "#B91C1C", color: "white", border: "none",
@@ -106,8 +126,36 @@ const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, o
           </div>
         </>
       )}
+      {showConfirm && (
+        <div style={{
+          position: "absolute", inset: 0, background: "rgba(255,255,255,0.85)", backdropFilter: "blur(4px)",
+          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 20, zIndex: 10,
+          textAlign: "center"
+        }}>
+          <div style={{ background: "white", padding: 24, borderRadius: 16, boxShadow: "0 10px 40px rgba(0,0,0,0.1)", width: "100%", border: "1px solid #f0f0f0" }}>
+            <div style={{ fontSize: 40, marginBottom: 12 }}>🗑️</div>
+            <h3 style={{ margin: "0 0 8px 0", fontSize: 18, fontWeight: 800 }}>Start Over?</h3>
+            <p style={{ margin: "0 0 20px 0", color: "#666", fontSize: 14 }}>This will remove all items from your order.<br/>Are you sure?</p>
+            <div style={{ display: "flex", gap: 10 }}>
+              <button
+                onClick={() => setShowConfirm(false)}
+                style={{ flex: 1, padding: "12px", background: "#f5f5f5", border: "none", borderRadius: 12, fontWeight: 700, cursor: "pointer", color: "#333", fontSize: 14 }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => { setShowConfirm(false); onStartOver(); }}
+                style={{ flex: 1, padding: "12px", background: "#B91C1C", border: "none", borderRadius: 12, fontWeight: 700, cursor: "pointer", color: "white", fontSize: 14 }}
+              >
+                Clear Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   </div>
-);
+  );
+};
 
 export default CartSidebar;

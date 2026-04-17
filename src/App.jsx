@@ -79,17 +79,6 @@ export default function App() {
                 🎉 {discountedCount} @ $1
               </div>
             )}
-            {cartItems.length > 0 && (
-              <button
-                onClick={() => setCartItems([])}
-                style={{
-                  background: "rgba(255,255,255,0.15)", color: "white", border: "1px solid rgba(255,255,255,0.3)",
-                  borderRadius: 20, padding: "4px 10px", fontSize: 13, fontWeight: 600, cursor: "pointer",
-                }}
-              >
-                Start Over
-              </button>
-            )}
             <button
               onClick={() => setShowCart(true)}
               style={{
@@ -240,6 +229,7 @@ export default function App() {
           onRemove={removeFromCart}
           onEdit={(item) => { setEditingItem(item); setShowCart(false); }}
           onShowCounter={() => { setShowCart(false); setShowCounter(true); }}
+          onStartOver={() => { setCartItems([]); setShowCart(false); }}
           onClose={() => setShowCart(false)}
         />
       )}
