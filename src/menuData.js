@@ -139,7 +139,7 @@ export const RAW_MENU = [
   { series: "Waffle Series", name: "Classic Waffle", regularPrice: 11.50, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
   { series: "Waffle Series", name: "Strawberry Oreo Waffle", regularPrice: 15.00, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
   { series: "Waffle Series", name: "QQ Passionfruit Waffle", regularPrice: 15.00, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
-  { series: "Waffle Series", name: "Milk Form Caramel Waffle", regularPrice: 15.00, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
+  { series: "Waffle Series", name: "Milk Foam Caramel Waffle", regularPrice: 15.00, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
 ];
 
 // ─── BUILD CATEGORIES ────────────────────────────────────────────────────────
@@ -191,14 +191,16 @@ export function calcCartTotals(cartItems) {
   const discountedCount = Math.floor(cartItems.length / 2);
   const discountedPrices = sortedBase.slice(0, discountedCount);
 
-  // Mark which items are discounted (cheapest ones)
+  // Mark which items are discounted (cheapest ELIGIBLE ones)
   const discountMap = new Map();
-  const tempSorted = cartItems
-    .map((item, idx) => ({ idx, base: item.drink.regularPrice }))
+  const tempSortedEligible = cartItems
+    .map((item, idx) => ({ idx, base: item.drink.regularPrice, drink: item.drink }))
+    // Exclude special waffles from being the $1 item (except Classic)
+    .filter(item => !(item.drink.series === "Waffle Series" && item.drink.name !== "Classic Waffle"))
     .sort((a, b) => a.base - b.base);
 
-  for (let i = 0; i < discountedCount; i++) {
-    discountMap.set(tempSorted[i].idx, true);
+  for (let i = 0; i < Math.min(discountedCount, tempSortedEligible.length); i++) {
+    discountMap.set(tempSortedEligible[i].idx, true);
   }
 
   let total = 0;
@@ -222,7 +224,7 @@ export function calcCartTotals(cartItems) {
     return { itemTotal, isDiscounted, baseCharge, upsize, toppingCost };
   });
 
-  return { total, savings, discountedCount, itemTotals };
+  return { total, savings, discountedCount: discountMap.size, itemTotals };
 }
 
 // ─── EMOJI MAP ────────────────────────────────────────────────────────────────
