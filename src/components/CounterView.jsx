@@ -78,7 +78,7 @@ const CounterView = ({ cartItems, itemTotals, total, savings, discountedCount, o
               {item.ice && <DetailRow icon="🧊" label="Ice" value={item.ice} />}
               {item.temp === "Hot" && <DetailRow icon="🔥" label="Temp" value="Hot" />}
               {item.size === "Large" && <DetailRow icon="⬆️" label="Upsize" value="+$1.00" />}
-              {totInfo.isDiscounted && <DetailRow icon="🎉" label="Discount" value="Base $1.00 (Promo)" red />}
+              {totInfo.isDiscounted && <DetailRow icon="🎉" label="Discount" value={`Base $1.00 (-$${(item.drink.regularPrice - 1).toFixed(2)})`} red />}
               {item.toppings.map(t => (
                 <DetailRow key={t.name} icon="➕" label="Topping" value={`${t.name} (+$${t.price.toFixed(2)})`} />
               ))}
@@ -100,6 +100,9 @@ const CounterView = ({ cartItems, itemTotals, total, savings, discountedCount, o
           <span style={{ color: "#fbbf24" }}>${total.toFixed(2)}</span>
         </div>
         <div style={{ fontSize: 11, color: "#888", marginTop: 4, textAlign: "center" }}>Show this screen to the barista</div>
+        <div style={{ fontSize: 10, color: "#777", marginTop: 12, textAlign: "center", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: 10, lineHeight: 1.4 }}>
+          * Please refer to the final price from the POS system for best final price accuracy.
+        </div>
       </div>
     </div>
   </div>

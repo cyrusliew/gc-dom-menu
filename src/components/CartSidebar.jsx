@@ -57,7 +57,7 @@ const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, o
                     )}
                     {info.isDiscounted && (
                       <span style={{ display: "inline-block", background: "#B91C1C", color: "white", fontSize: 9, fontWeight: 700, padding: "2px 7px", borderRadius: 20, marginTop: 4 }}>
-                        PROMO: $1 BASE
+                        PROMO: $1 BASE (-${(item.drink.regularPrice - 1).toFixed(2)})
                       </span>
                     )}
                   </div>
@@ -123,6 +123,9 @@ const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, o
               <Eye size={18} />
               Show to Counter
             </button>
+            <div style={{ fontSize: 11, color: "#888", textAlign: "center", marginTop: 12, lineHeight: 1.4, padding: "0 10px" }}>
+              * Please refer to the final price from the POS system for best final price accuracy.
+            </div>
           </div>
         </>
       )}
