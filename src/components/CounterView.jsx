@@ -45,7 +45,7 @@ const CounterView = ({ cartItems, itemTotals, total, savings, discountedCount, o
       {discountedCount > 0 && (
         <div style={{ background: "linear-gradient(135deg, #B91C1C, #991b1b)", borderRadius: 14, padding: "14px 18px", marginBottom: 20, color: "white" }}>
           <div style={{ fontWeight: 800, fontSize: 15, marginBottom: 2 }}>🎉 3rd Anniversary Promo Applied!</div>
-          <div style={{ fontSize: 13, opacity: 0.9 }}>{discountedCount} drink{discountedCount > 1 ? "s" : ""} at $1.00 • You saved ${savings.toFixed(2)}</div>
+          <div style={{ fontSize: 13, opacity: 0.9 }}>{discountedCount} item{discountedCount > 1 ? "s" : ""} at $1.00 • You saved ${savings.toFixed(2)}</div>
         </div>
       )}
 

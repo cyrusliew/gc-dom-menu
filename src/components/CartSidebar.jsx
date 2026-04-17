@@ -41,7 +41,7 @@ const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, o
         <>
           {discountedCount > 0 && (
             <div style={{ background: "#fef3f3", border: "1px solid #fde8e8", borderRadius: 12, padding: "10px 14px", marginBottom: 16, fontSize: 13, color: "#B91C1C", fontWeight: 600 }}>
-              🎉 {discountedCount} drink{discountedCount > 1 ? "s" : ""} at $1.00 · Save ${savings.toFixed(2)}!
+              🎉 {discountedCount} item{discountedCount > 1 ? "s" : ""} at $1.00 · Save ${savings.toFixed(2)}!
             </div>
           )}
 

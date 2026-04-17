@@ -30,8 +30,8 @@ const Pill = ({ selected, onClick, label, small }) => (
 
 const CustomModal = ({ drink, initialItem, onClose, onAdd }) => {
   const [size, setSize] = useState(initialItem?.size || "Regular");
-  const [sugar, setSugar] = useState(initialItem ? initialItem.sugar : (drink.hasSugar ? "100%" : null));
-  const [ice, setIce] = useState(initialItem ? initialItem.ice : (drink.hasIce ? "Standard" : null));
+  const [sugar, setSugar] = useState(initialItem ? initialItem.sugar : null);
+  const [ice, setIce] = useState(initialItem ? initialItem.ice : null);
   const [temp, setTemp] = useState(initialItem ? initialItem.temp : (drink.hasIce ? "Iced" : drink.hasHot ? "Hot" : "Iced"));
   const [selectedToppings, setSelectedToppings] = useState(initialItem?.toppings || []);
 
@@ -60,7 +60,12 @@ const CustomModal = ({ drink, initialItem, onClose, onAdd }) => {
   const toppingCost = selectedToppings.reduce((s, t) => s + t.price, 0);
   const estimatedTotal = basePrice + toppingCost;
 
+  const sugarRequired = drink.hasSugar && sugar === null;
+  const iceRequired = drink.hasIce && temp !== "Hot" && ice === null;
+  const canAdd = !sugarRequired && !iceRequired;
+
   const handleAdd = () => {
+    if (!canAdd) return;
     onAdd({
       drink,
       size,
@@ -233,13 +238,23 @@ const CustomModal = ({ drink, initialItem, onClose, onAdd }) => {
           borderTop: "1px solid #f0f0f0",
           boxShadow: "0 -8px 20px rgba(0,0,0,0.06)",
         }}>
+        {!canAdd && (
+          <div style={{ fontSize: 12, color: "#B91C1C", textAlign: "center", marginBottom: 8, fontWeight: 600 }}>
+            Please select{sugarRequired && iceRequired ? " a sugar level and ice level" : sugarRequired ? " a sugar level" : " an ice level"} to continue
+          </div>
+        )}
         <button
           onClick={handleAdd}
+          disabled={!canAdd}
           style={{
-            width: "100%", background: "#B91C1C", color: "white", border: "none",
+            width: "100%",
+            background: canAdd ? "#B91C1C" : "#e5e7eb",
+            color: canAdd ? "white" : "#9ca3af",
+            border: "none",
             borderRadius: 14, padding: "16px", fontSize: 16, fontWeight: 800,
-            cursor: "pointer", letterSpacing: 0.5,
-            boxShadow: "0 4px 16px rgba(185,28,28,0.35)",
+            cursor: canAdd ? "pointer" : "not-allowed", letterSpacing: 0.5,
+            boxShadow: canAdd ? "0 4px 16px rgba(185,28,28,0.35)" : "none",
+            transition: "all 0.2s",
           }}
         >
           {initialItem ? "Update Order" : "Add to Order"}
