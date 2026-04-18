@@ -34,6 +34,7 @@ const CustomModal = ({ drink, initialItem, onClose, onAdd }) => {
   const [ice, setIce] = useState(initialItem ? initialItem.ice : null);
   const [temp, setTemp] = useState(initialItem ? initialItem.temp : (drink.hasIce ? "Iced" : drink.hasHot ? "Hot" : "Iced"));
   const [selectedToppings, setSelectedToppings] = useState(initialItem?.toppings || []);
+  const [cube, setCube] = useState(initialItem?.cube ?? null);
 
   const handleTempChange = (newTemp) => {
     setTemp(newTemp);
@@ -60,9 +61,10 @@ const CustomModal = ({ drink, initialItem, onClose, onAdd }) => {
   const toppingCost = selectedToppings.reduce((s, t) => s + t.price, 0);
   const estimatedTotal = basePrice + toppingCost;
 
+  const cubeRequired = drink.hasCube && cube === null;
   const sugarRequired = drink.hasSugar && sugar === null;
   const iceRequired = drink.hasIce && temp !== "Hot" && ice === null;
-  const canAdd = !sugarRequired && !iceRequired;
+  const canAdd = !cubeRequired && !sugarRequired && !iceRequired;
 
   const handleAdd = () => {
     if (!canAdd) return;
@@ -72,6 +74,7 @@ const CustomModal = ({ drink, initialItem, onClose, onAdd }) => {
       sugar: sugar,          // Sugar applies to both hot and cold
       ice: temp === "Hot" ? null : ice,
       temp,
+      cube: drink.hasCube ? cube : undefined,
       toppings: selectedToppings,
       id: initialItem?.id || (Date.now() + Math.random()),
     });
@@ -79,7 +82,7 @@ const CustomModal = ({ drink, initialItem, onClose, onAdd }) => {
   };
 
   const sugarOptions = ["0% No Sugar", "30% Little Sugar", "50% Half Sugar", "70% Less Sugar", "100% Standard Sugar", "130% Extra Sugar"];
-  const iceOptions = ["0% No Ice", "30% Little Ice", "70% Less Ice", "100% Standard", "130% Extra Ice"];
+  const iceOptions = ["30% Little Ice", "70% Less Ice", "100% Standard", "130% Extra Ice"];
   const pillLabel = (option) => FEATURE_HIDE_SUGAR_ICE_LABEL ? option.split("%")[0] + "%" : option;
 
   return (
@@ -165,8 +168,18 @@ const CustomModal = ({ drink, initialItem, onClose, onAdd }) => {
           </Section>
         )}
 
+        {/* Taro Cube */}
+        {drink.hasCube && (
+          <Section title="Taro Cube">
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <Pill selected={cube === "Cube"} onClick={() => setCube("Cube")} label="🟣 Taro Cube" />
+              <Pill selected={cube === "No Cube"} onClick={() => setCube("No Cube")} label="✖ No Cube" />
+            </div>
+          </Section>
+        )}
+
         {/* Toppings */}
-        {drink.series !== "Waffle Series" && (() => {
+        {drink.series !== "Waffle Series" && !drink.noToppings && (() => {
           const availableToppings = temp === "Hot"
             ? TOPPINGS.filter(t => !HOT_INCOMPATIBLE_TOPPINGS.has(t.name))
             : TOPPINGS;
@@ -240,7 +253,11 @@ const CustomModal = ({ drink, initialItem, onClose, onAdd }) => {
         }}>
         {!canAdd && (
           <div style={{ fontSize: 12, color: "#B91C1C", textAlign: "center", marginBottom: 8, fontWeight: 600 }}>
-            Please select{sugarRequired && iceRequired ? " a sugar level and ice level" : sugarRequired ? " a sugar level" : " an ice level"} to continue
+            Please select{[
+              cubeRequired && "a taro cube option",
+              sugarRequired && "a sugar level",
+              iceRequired && "an ice level",
+            ].filter(Boolean).join(" and ")} to continue
           </div>
         )}
         <button

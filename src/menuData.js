@@ -101,7 +101,7 @@ export const RAW_MENU = [
   { series: "Milk Tea Series", name: "Strawberry Chocolate", regularPrice: 8.70, largePrice: 9.70, hasSugar: true, hasIce: true, hasHot: false },
   { series: "Milk Tea Series", name: "Honeydew Green Milk Tea", regularPrice: 9.20, largePrice: 10.20, hasSugar: true, hasIce: true, hasHot: false },
   { series: "Milk Tea Series", name: "Mango Green Milk Tea", regularPrice: 9.20, largePrice: 10.20, hasSugar: true, hasIce: true, hasHot: false },
-  { series: "Milk Tea Series", name: "Taro Milk Drink", regularPrice: 9.50, largePrice: 10.50, hasSugar: true, hasIce: true, hasHot: true },
+  { series: "Milk Tea Series", name: "Taro Milk Drink", regularPrice: 9.50, largePrice: 10.50, hasSugar: true, hasIce: true, hasHot: true, hasCube: true },
   // Slushie Series
   { series: "Slushie Series", name: "Lychee Slushie", regularPrice: 7.50, largePrice: 8.50, hasSugar: false, hasIce: false, hasHot: false },
   { series: "Slushie Series", name: "Passionfruit w Coconut Jelly", regularPrice: 7.90, largePrice: 8.90, hasSugar: false, hasIce: false, hasHot: false },
@@ -129,7 +129,7 @@ export const RAW_MENU = [
   { series: "Redbull Series", name: "Powered Grapefruit OG", regularPrice: 9.20, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
   { series: "Redbull Series", name: "Powered Grapefruit SF", regularPrice: 9.20, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
   // Thai Mango Series (Seasonal)
-  { series: "Thai Mango Series", name: "Thai Mango Milk Tea", regularPrice: 8.90, largePrice: 9.90, hasSugar: false, hasIce: false, hasHot: false },
+  { series: "Thai Mango Series", name: "Thai Mango Milk Tea", regularPrice: 8.90, largePrice: 9.90, hasSugar: true, hasIce: false, hasHot: false, noToppings: true },
   { series: "Thai Mango Series", name: "Thai Mango Slushie", regularPrice: 8.90, largePrice: 9.90, hasSugar: false, hasIce: false, hasHot: false },
   // Greek Yogurt Series (Seasonal)
   { series: "Greek yogurt Series", name: "Mango Greek Yogurt", regularPrice: 10.90, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
