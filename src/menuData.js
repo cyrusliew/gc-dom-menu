@@ -59,8 +59,8 @@ export const RAW_MENU = [
   { series: "Fresh Milk Series", name: "Fresh Milk Oolong Tea", regularPrice: 7.30, largePrice: 8.30, hasSugar: true, hasIce: true, hasHot: true },
   { series: "Fresh Milk Series", name: "Fresh Milk Earl Grey Tea", regularPrice: 7.30, largePrice: 8.30, hasSugar: true, hasIce: true, hasHot: true },
   { series: "Fresh Milk Series", name: "Fresh Milk Wintermelon", regularPrice: 7.30, largePrice: 8.30, hasSugar: false, hasIce: true, hasHot: true },
-  { series: "Fresh Milk Series", name: "Fresh Milk w Azuki and Pudding", regularPrice: 8.00, largePrice: 9.00, hasSugar: true, hasIce: true, hasHot: false },
-  { series: "Fresh Milk Series", name: "Fresh Milk w Herbal Jelly and Pearl", regularPrice: 8.00, largePrice: 9.00, hasSugar: true, hasIce: true, hasHot: false },
+  { series: "Fresh Milk Series", name: "Fresh Milk w Azuki and Pudding", regularPrice: 8.00, largePrice: 9.00, hasSugar: false, hasIce: false, hasHot: false },
+  { series: "Fresh Milk Series", name: "Fresh Milk w Herbal Jelly and Pearl", regularPrice: 8.00, largePrice: 9.00, hasSugar: false, hasIce: false, hasHot: false },
   { series: "Fresh Milk Series", name: "Fresh Milk Japanese Matcha", regularPrice: 8.00, largePrice: 9.00, hasSugar: true, hasIce: true, hasHot: true },
   { series: "Fresh Milk Series", name: "Mango Matcha w Mango Pearl", regularPrice: 9.90, largePrice: 10.90, hasSugar: false, hasIce: false, hasHot: false },
   // Coffee Series
