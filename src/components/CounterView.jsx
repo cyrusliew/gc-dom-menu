@@ -62,7 +62,7 @@ const CounterView = ({ cartItems, itemTotals, total, savings, discountedCount, o
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 16, fontWeight: 800, color: "#1a1a1a" }}>{item.drink.name}</div>
-                <div style={{ fontSize: 12, color: "#888", marginTop: 1 }}>{item.size}</div>
+                <div style={{ fontSize: 12, color: "#888", marginTop: 1 }}>{item.temp === "Hot" ? "Hot" : item.size}</div>
               </div>
               <div style={{ textAlign: "right" }}>
                 {totInfo.isDiscounted && (
@@ -79,9 +79,9 @@ const CounterView = ({ cartItems, itemTotals, total, savings, discountedCount, o
 
             {/* Details */}
             <div style={{ borderTop: "1px solid #f0f0f0", paddingTop: 10, display: "flex", flexDirection: "column", gap: 5 }}>
-              {item.temp === "Hot" && <DetailRow icon="🔥" label="Temp" value="Hot" />}
               {item.sugar && <DetailRow icon="🍬" label="Sugar" value={item.sugar} />}
               {item.ice && <DetailRow icon="🧊" label="Ice" value={item.ice} />}
+              {item.cube && <DetailRow icon="🟣" label="Taro Cube" value={item.cube === "Cube" ? "Taro Cube" : "No Cube"} />}
               {item.size === "Large" && <DetailRow icon="⬆️" label="Upsize" value="+$1.00" />}
               {totInfo.isDiscounted && <DetailRow icon="🎉" label="Discount" value={`Base $1.00 (-$${(item.drink.regularPrice - 1).toFixed(2)})`} red />}
               {item.toppings.map(t => (
