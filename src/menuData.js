@@ -94,7 +94,7 @@ export const RAW_MENU = [
   { series: "Milk Tea Series", name: "Brown Sugar Milk Tea", regularPrice: 8.20, largePrice: 9.20, hasSugar: true, hasIce: true, hasHot: true },
   { series: "Milk Tea Series", name: "Caramel Milk Tea", regularPrice: 8.20, largePrice: 9.20, hasSugar: true, hasIce: true, hasHot: true },
   { series: "Milk Tea Series", name: "Milk Tea w Pudding and Pearl", regularPrice: 8.40, largePrice: 9.40, hasSugar: true, hasIce: true, hasHot: false },
-  { series: "Milk Tea Series", name: "Earl Grey Milk Tea w 3J", regularPrice: 8.40, largePrice: 9.40, hasSugar: true, hasIce: true, hasHot: false },
+  { series: "Milk Tea Series", name: "Earl Grey Milk Tea w 3J", regularPrice: 8.40, largePrice: 9.40, hasSugar: true, hasIce: true, hasHot: false, noToppings: true },
   { series: "Milk Tea Series", name: "Oreo Choclate Milk Tea", regularPrice: 8.40, largePrice: 9.40, hasSugar: true, hasIce: true, hasHot: false },
   { series: "Milk Tea Series", name: "Strawberry Green Milk Tea", regularPrice: 8.40, largePrice: 9.40, hasSugar: true, hasIce: true, hasHot: false },
   { series: "Milk Tea Series", name: "Honeydew Milk Drink", regularPrice: 8.70, largePrice: 9.70, hasSugar: true, hasIce: true, hasHot: false },
