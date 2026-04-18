@@ -10,9 +10,12 @@ import TopPickFloater from './components/TopPickFloater';
 import CounterView from './components/CounterView';
 import CartSidebar from './components/CartSidebar';
 import AgreementModal from './components/AgreementModal';
+import ExpiredPage, { isPromoExpired } from './components/ExpiredPage';
 
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
 export default function App() {
+  // ── EXPIRY GATE ─────────────────────────────────────────────────────────────
+  if (isPromoExpired()) return <ExpiredPage />;
   const [cartItems, setCartItems] = useState(() => {
     try {
       const saved = localStorage.getItem("gc_cart");
@@ -140,6 +143,24 @@ export default function App() {
 
       {/* ── MAIN CONTENT ── */}
       <div style={{ padding: "16px 16px 100px" }}>
+        {/* ── TOP DISCLAIMER ── */}
+        <div style={{
+          marginBottom: 20,
+          padding: "12px 16px",
+          background: "#fff8f8",
+          border: "1px solid #fce8e8",
+          borderRadius: 12,
+          fontSize: 12,
+          color: "#888",
+          textAlign: "center",
+          lineHeight: 1.7,
+        }}>
+          <span style={{ fontWeight: 700, color: "#B91C1C" }}>ℹ️ Disclaimer:</span>{" "}
+          Information and pricing on this app are applicable to{" "}
+          <strong style={{ color: "#555" }}>Gong cha Dominion Road</strong>{" "}
+          only, and are valid during the <strong style={{ color: "#555" }}>3rd Anniversary promotional period</strong>.
+          Prices shown are estimates — please refer to the POS system for final pricing.
+        </div>
         {filteredCategories.map(cat => (
           <div
             key={cat.id}
