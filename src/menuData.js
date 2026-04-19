@@ -1,5 +1,5 @@
 // ─── FEATURE FLAGS ─────────────────────────────────────────────────────────────
-export const FEATURE_HIDE_TOTAL_PRICE = true;
+export const FEATURE_HIDE_TOTAL_PRICE = false;
 export const FEATURE_HIDE_SUGAR_ICE_LABEL = true; // When true, only show percentage (e.g. "100%") instead of full label (e.g. "100% Standard Sugar")
 
 // ─── RAW DATA ────────────────────────────────────────────────────────────────
@@ -132,9 +132,9 @@ export const RAW_MENU = [
   { series: "Thai Mango Series", name: "Thai Mango Milk Tea", regularPrice: 8.90, largePrice: 9.90, hasSugar: true, hasIce: false, hasHot: false, noToppings: true },
   { series: "Thai Mango Series", name: "Thai Mango Slushie", regularPrice: 8.90, largePrice: 9.90, hasSugar: false, hasIce: false, hasHot: false },
   // Greek Yogurt Series (Seasonal)
-  { series: "Greek yogurt Series", name: "Mango Greek Yogurt", regularPrice: 10.90, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
-  { series: "Greek yogurt Series", name: "Strawberry Greek Yogurt", regularPrice: 10.90, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
-  { series: "Greek yogurt Series", name: "Peach Greek Yogurt", regularPrice: 10.90, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
+  { series: "Greek yogurt Series", name: "Mango Greek Yogurt", regularPrice: 10.90, largePrice: null, hasSugar: true, hasIce: false, hasHot: false },
+  { series: "Greek yogurt Series", name: "Strawberry Greek Yogurt", regularPrice: 10.90, largePrice: null, hasSugar: true, hasIce: false, hasHot: false },
+  { series: "Greek yogurt Series", name: "Peach Greek Yogurt", regularPrice: 10.90, largePrice: null, hasSugar: true, hasIce: false, hasHot: false },
   // Waffle Series
   { series: "Waffle Series", name: "Classic Waffle", regularPrice: 11.50, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
   { series: "Waffle Series", name: "Strawberry Oreo Waffle", regularPrice: 15.00, largePrice: null, hasSugar: false, hasIce: false, hasHot: false },
