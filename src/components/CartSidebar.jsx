@@ -20,7 +20,7 @@ const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, o
     <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.4)", animation: "fadeInOverlay 0.25s ease" }} onClick={onClose} />
     <div style={{
       position: "absolute", right: 0, top: 0, bottom: 0, width: "min(100%, 380px)",
-      background: "white", overflowY: "auto", padding: "20px",
+      background: "white", overflowY: showConfirm ? "hidden" : "auto", padding: "20px",
       boxShadow: "-10px 0 40px rgba(0,0,0,0.15)",
       animation: "slideInRight 0.3s cubic-bezier(0.32, 0.72, 0, 1)",
     }}>
@@ -150,34 +150,35 @@ const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, o
           </div>
         </>
       )}
-      {showConfirm && (
-        <div style={{
-          position: "absolute", inset: 0, background: "rgba(255,255,255,0.85)", backdropFilter: "blur(4px)",
-          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 20, zIndex: 10,
-          textAlign: "center"
-        }}>
-          <div style={{ background: "white", padding: 24, borderRadius: 16, boxShadow: "0 10px 40px rgba(0,0,0,0.1)", width: "100%", border: "1px solid #f0f0f0" }}>
-            <div style={{ fontSize: 40, marginBottom: 12 }}>🗑️</div>
-            <h3 style={{ margin: "0 0 8px 0", fontSize: 18, fontWeight: 800 }}>Start Over?</h3>
-            <p style={{ margin: "0 0 20px 0", color: "#666", fontSize: 14 }}>This will remove all items from your order.<br/>Are you sure?</p>
-            <div style={{ display: "flex", gap: 10 }}>
-              <button
-                onClick={() => setShowConfirm(false)}
-                style={{ flex: 1, padding: "12px", background: "#f5f5f5", border: "none", borderRadius: 12, fontWeight: 700, cursor: "pointer", color: "#333", fontSize: 14 }}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => { setShowConfirm(false); onStartOver(); }}
-                style={{ flex: 1, padding: "12px", background: "#B91C1C", border: "none", borderRadius: 12, fontWeight: 700, cursor: "pointer", color: "white", fontSize: 14 }}
-              >
-                Clear Cart
-              </button>
-            </div>
+    </div>
+    {showConfirm && (
+      <div style={{
+        position: "absolute", right: 0, top: 0, bottom: 0, width: "min(100%, 380px)",
+        background: "rgba(255,255,255,0.85)", backdropFilter: "blur(4px)",
+        display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 20, zIndex: 10,
+        textAlign: "center", animation: "fadeInOverlay 0.2s ease"
+      }}>
+        <div style={{ background: "white", padding: 24, borderRadius: 16, boxShadow: "0 10px 40px rgba(0,0,0,0.1)", width: "100%", border: "1px solid #f0f0f0" }}>
+          <div style={{ fontSize: 40, marginBottom: 12 }}>🗑️</div>
+          <h3 style={{ margin: "0 0 8px 0", fontSize: 18, fontWeight: 800 }}>Start Over?</h3>
+          <p style={{ margin: "0 0 20px 0", color: "#666", fontSize: 14 }}>This will remove all items from your order.<br/>Are you sure?</p>
+          <div style={{ display: "flex", gap: 10 }}>
+            <button
+              onClick={() => setShowConfirm(false)}
+              style={{ flex: 1, padding: "12px", background: "#f5f5f5", border: "none", borderRadius: 12, fontWeight: 700, cursor: "pointer", color: "#333", fontSize: 14 }}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => { setShowConfirm(false); onStartOver(); }}
+              style={{ flex: 1, padding: "12px", background: "#B91C1C", border: "none", borderRadius: 12, fontWeight: 700, cursor: "pointer", color: "white", fontSize: 14 }}
+            >
+              Clear Cart
+            </button>
           </div>
         </div>
-      )}
-    </div>
+      </div>
+    )}
   </div>
   );
 };
