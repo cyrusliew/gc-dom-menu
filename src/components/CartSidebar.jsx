@@ -58,9 +58,9 @@ const CartSidebar = ({ cartItems, itemTotals, total, savings, discountedCount, o
                     <div style={{ fontSize: 14, fontWeight: 700, color: "#1a1a1a" }}>{item.drink.name}</div>
                     <div style={{ fontSize: 12, color: "#888", marginTop: 2 }}>
                       {item.temp === "Hot" ? "Hot" : item.size}
+                      {item.cube ? ` · ${item.cube === "Cube" ? "🟣 Taro Cube" : "✖ No Cube"}` : ""}
                       {item.sugar ? ` · ${item.sugar}` : ""}
                       {item.ice ? ` · ${item.ice}` : ""}
-                      {item.cube ? ` · ${item.cube === "Cube" ? "🟣 Taro Cube" : "✖ No Cube"}` : ""}
                     </div>
                     {item.toppings.length > 0 && (
                       <div style={{ fontSize: 11, color: "#B91C1C", marginTop: 2 }}>
