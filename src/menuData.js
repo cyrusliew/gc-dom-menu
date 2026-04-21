@@ -1,6 +1,7 @@
 // ─── FEATURE FLAGS ─────────────────────────────────────────────────────────────
 export const FEATURE_HIDE_TOTAL_PRICE = false;
 export const FEATURE_HIDE_SUGAR_ICE_LABEL = true; // When true, only show percentage (e.g. "100%") instead of full label (e.g. "100% Standard Sugar")
+export const FEATURE_ENABLE_DISCOUNTS = false; // When false, disables the "Buy 1, Get 2nd Drink for $1" promotion
 
 // ─── RAW DATA ────────────────────────────────────────────────────────────────
 export const TOPPINGS = [
@@ -184,6 +185,22 @@ export const CATEGORIES = buildCategories();
 // ─── PROMO CALCULATION ────────────────────────────────────────────────────────
 export function calcCartTotals(cartItems) {
   if (cartItems.length === 0) return { total: 0, savings: 0, discountedCount: 0, itemTotals: [] };
+
+  // If discounts are disabled, calculate regular totals
+  if (!FEATURE_ENABLE_DISCOUNTS) {
+    let total = 0;
+    const itemTotals = cartItems.map((item) => {
+      const toppingCost = item.toppings.reduce((s, t) => s + t.price, 0);
+      const upsize = item.size === "Large" ? 1.0 : 0;
+      const baseCharge = item.drink.regularPrice;
+      const itemTotal = baseCharge + upsize + toppingCost;
+      total += itemTotal;
+
+      return { itemTotal, isDiscounted: false, baseCharge, upsize, toppingCost };
+    });
+
+    return { total, savings: 0, discountedCount: 0, itemTotals };
+  }
 
   // Base prices (excluding toppings) sorted ascending for discount logic
   const basePrices = cartItems.map(item => item.drink.regularPrice);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { X, Check } from "lucide-react";
-import { TOPPINGS, SERIES_EMOJI, FEATURE_HIDE_TOTAL_PRICE, FEATURE_HIDE_SUGAR_ICE_LABEL } from "../menuData";
+import { TOPPINGS, SERIES_EMOJI, FEATURE_HIDE_TOTAL_PRICE, FEATURE_HIDE_SUGAR_ICE_LABEL, FEATURE_ENABLE_DISCOUNTS } from "../menuData";
 
 // Toppings that melt / don't work well in hot drinks
 const HOT_INCOMPATIBLE_TOPPINGS = new Set(["Pudding Jelly", "Herbal Jelly", "Aiyu Jelly", "Oreo"]);
@@ -236,7 +236,7 @@ const CustomModal = ({ drink, initialItem, onClose, onAdd }) => {
               <span>${estimatedTotal.toFixed(2)}</span>
             </div>
             <p style={{ fontSize: 10, color: "#999", margin: "6px 0 0", textAlign: "center" }}>
-              * Anniversary discount applied at checkout based on order total
+              {FEATURE_ENABLE_DISCOUNTS ? "* Anniversary discount applied at checkout based on order total" : "* Prices shown are estimates — please refer to the POS system for final pricing"}
             </p>
           </div>
         )}

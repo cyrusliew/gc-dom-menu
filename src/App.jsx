@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import { ShoppingCart,  Eye } from "lucide-react";
 
-import {  CATEGORIES, calcCartTotals, SERIES_EMOJI, FEATURE_HIDE_TOTAL_PRICE } from "./menuData";
+import {  CATEGORIES, calcCartTotals, SERIES_EMOJI, FEATURE_HIDE_TOTAL_PRICE, FEATURE_ENABLE_DISCOUNTS } from "./menuData";
 
 import GongChaLogo from './components/GongChaLogo';
 import DrinkCard from './components/DrinkCard';
@@ -100,9 +100,11 @@ export default function App() {
         </div>
 
         {/* Anniversary banner */}
-        <div style={{ background: "linear-gradient(90deg, #7f1d1d, #B91C1C, #7f1d1d)", color: "white", textAlign: "center", padding: "7px 16px", fontSize: 12, fontWeight: 600, letterSpacing: 0.3 }}>
-          🎂 Dominion Road 3rd Anniversary — Buy 1, Get 2nd Drink for $1!
-        </div>
+        {FEATURE_ENABLE_DISCOUNTS && (
+          <div style={{ background: "linear-gradient(90deg, #7f1d1d, #B91C1C, #7f1d1d)", color: "white", textAlign: "center", padding: "7px 16px", fontSize: 12, fontWeight: 600, letterSpacing: 0.3 }}>
+            🎂 Dominion Road 3rd Anniversary — Buy 1, Get 2nd Drink for $1!
+          </div>
+        )}
 
         {/* Search */}
         <div style={{ padding: "10px 16px 0" }}>
@@ -144,23 +146,25 @@ export default function App() {
       {/* ── MAIN CONTENT ── */}
       <div style={{ padding: "16px 16px 100px" }}>
         {/* ── TOP DISCLAIMER ── */}
-        <div style={{
-          marginBottom: 20,
-          padding: "12px 16px",
-          background: "#fff8f8",
-          border: "1px solid #fce8e8",
-          borderRadius: 12,
-          fontSize: 12,
-          color: "#888",
-          textAlign: "center",
-          lineHeight: 1.7,
-        }}>
-          <span style={{ fontWeight: 700, color: "#B91C1C" }}>ℹ️ Disclaimer:</span>{" "}
-          Information and pricing on this app are applicable to{" "}
-          <strong style={{ color: "#555" }}>Gong cha Dominion Road</strong>{" "}
-          only, and are valid during the <strong style={{ color: "#555" }}>3rd Anniversary promotional period</strong>.
-          Prices shown are estimates — please refer to the POS system for final pricing.
-        </div>
+        {FEATURE_ENABLE_DISCOUNTS && (
+          <div style={{
+            marginBottom: 20,
+            padding: "12px 16px",
+            background: "#fff8f8",
+            border: "1px solid #fce8e8",
+            borderRadius: 12,
+            fontSize: 12,
+            color: "#888",
+            textAlign: "center",
+            lineHeight: 1.7,
+          }}>
+            <span style={{ fontWeight: 700, color: "#B91C1C" }}>ℹ️ Disclaimer:</span>{" "}
+            Information and pricing on this app are applicable to{" "}
+            <strong style={{ color: "#555" }}>Gong cha Dominion Road</strong>{" "}
+            only, and are valid during the <strong style={{ color: "#555" }}>3rd Anniversary promotional period</strong>.
+            Prices shown are estimates — please refer to the POS system for final pricing.
+          </div>
+        )}
         {filteredCategories.map(cat => (
           <div
             key={cat.id}

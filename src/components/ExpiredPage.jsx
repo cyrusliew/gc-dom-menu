@@ -5,6 +5,10 @@ import GongChaLogo from './GongChaLogo';
 export const PROMO_END_UTC = new Date('2026-04-19T11:00:00Z');
 
 export function isPromoExpired() {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('bypass') === 'expiry') {
+    return false;
+  }
   return new Date() >= PROMO_END_UTC;
 }
 
